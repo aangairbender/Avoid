@@ -21,7 +21,7 @@ namespace Avoid
         {
             InitializeComponent();
             inputController = new InputController();
-            gm = new GameManager(new MapCollection().generateRandomMap2(4000, 12), inputController, 50f);
+            gm = new GameManager(new MapCollection().generateRandomMap2(600, 15), inputController, 40f);
             timer1.Enabled = true;
             pms = DateTime.Now;
             gm.start();
@@ -41,7 +41,7 @@ namespace Avoid
             inputController.keyDown(e);
             if (e.KeyCode == Keys.Space && !gm.playing)
             {
-                gm = new GameManager(new MapCollection().generateRandomMap2(4000, 12), inputController, 50f);
+                gm = new GameManager(new MapCollection().generateRandomMap2(600, 15), inputController, 50f);
                 gm.start();
                 timer1.Enabled = true;
             } else
@@ -51,6 +51,7 @@ namespace Avoid
                 //timer1.Enabled = false;
             }
             if (e.KeyCode == Keys.F1) gm.showReplay();
+            if (e.KeyCode == Keys.A) gm.showAuto();
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
