@@ -38,7 +38,7 @@ namespace Avoid
             inputController.keyDown(e);
             if (e.KeyCode == Keys.Space && !gm.playing)
             {
-                gm.start();
+                gm.resume();
                 timer1.Enabled = true;
             } else
             if (e.KeyCode == Keys.Space && gm.playing)
