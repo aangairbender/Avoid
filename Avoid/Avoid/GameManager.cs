@@ -9,15 +9,15 @@ namespace Avoid
 {
     class GameManager
     {
-        public const float barWidth = 10f;
+        public const float barWidth = 20f;
         public float timems; // in ms from beginning
         public int time; //in ticks
-        public int msInTick;
+        public float msInTick;
         public int[] p = new int[4];
         public Map map;
         public bool playing;
         public InputController inputController;
-        public GameManager(Map map, InputController inputController, int msInTick)
+        public GameManager(Map map, InputController inputController, float msInTick)
         {
             this.map = map;
             this.inputController = inputController;
@@ -54,7 +54,7 @@ namespace Avoid
             }
             if(p[ind] < map.v[ind].Count && map.v[ind][p[ind]] == time)
             {
-                //pause();
+                pause();
             }
             time++;
         }

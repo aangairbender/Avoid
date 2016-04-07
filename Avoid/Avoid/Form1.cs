@@ -20,8 +20,9 @@ namespace Avoid
         {
             InitializeComponent();
             inputController = new InputController();
-            gm = new GameManager(new MapCollection().generateRandomMap(400), inputController, 5);
+            gm = new GameManager(new MapCollection().generateRandomMap(4000), inputController, 2.5f);
             timer1.Enabled = true;
+            gm.start();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -38,13 +39,14 @@ namespace Avoid
             inputController.keyDown(e);
             if (e.KeyCode == Keys.Space && !gm.playing)
             {
-                gm.resume();
+                gm = new GameManager(new MapCollection().generateRandomMap(4000), inputController, 2.5f);
+                gm.start();
                 timer1.Enabled = true;
             } else
             if (e.KeyCode == Keys.Space && gm.playing)
             {
-                gm.pause();
-                timer1.Enabled = false;
+               // gm.pause();
+                //timer1.Enabled = false;
             }
         }
 
