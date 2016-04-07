@@ -16,12 +16,14 @@ namespace Avoid
         Image bmp;
         InputController inputController;
         GameManager gm;
+        DateTime pms;
         public Form1()
         {
             InitializeComponent();
             inputController = new InputController();
-            gm = new GameManager(new MapCollection().generateRandomMap2(4000, 12), inputController, 3f);
+            gm = new GameManager(new MapCollection().generateRandomMap2(4000, 12), inputController, 50f);
             timer1.Enabled = true;
+            pms = DateTime.Now;
             gm.start();
         }
 
@@ -39,7 +41,7 @@ namespace Avoid
             inputController.keyDown(e);
             if (e.KeyCode == Keys.Space && !gm.playing)
             {
-                gm = new GameManager(new MapCollection().generateRandomMap2(4000, 12), inputController, 2.5f);
+                gm = new GameManager(new MapCollection().generateRandomMap2(4000, 12), inputController, 50f);
                 gm.start();
                 timer1.Enabled = true;
             } else
@@ -48,6 +50,7 @@ namespace Avoid
                // gm.pause();
                 //timer1.Enabled = false;
             }
+            if (e.KeyCode == Keys.F1) gm.showReplay();
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -57,9 +60,11 @@ namespace Avoid
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            gm.update(timer1.Interval);
+            DateTime nms = DateTime.Now;
+            gm.update((float)nms.Subtract(pms).TotalMilliseconds);
             gm.draw(g, bmp.Width, bmp.Height);
             pictureBox1.Image = bmp;
+            pms = nms;
         }
     }
 }

@@ -18,6 +18,8 @@ namespace Avoid
         public bool playing;
         public InputController inputController;
         public AudioManager audioManager;
+        public int[] positions;
+        public bool showingReplay;
         public GameManager(Map map, InputController inputController, float msInTick)
         {
             this.map = map;
@@ -26,6 +28,8 @@ namespace Avoid
             timems = 0;
             playing = false;
             audioManager = new AudioManager();
+            showingReplay = false;
+            positions = new int[map.length];
         }
 
         public void start()
@@ -36,10 +40,22 @@ namespace Avoid
                 p[i] = 0;
             playing = true;
             audioManager["background"].PlayLooping();
+            showingReplay = false;
+        }
+
+        public void showReplay()
+        {
+            timems = 0;
+            time = 0;
+            for (int i = 0; i < 4; ++i)
+                p[i] = 0;
+            playing = true;
+            audioManager["background"].PlayLooping();
+            showingReplay = true;
         }
 
         public void resume()
-        {
+        { 
             playing = true;
         }
 
@@ -47,11 +63,13 @@ namespace Avoid
         {
             playing = false;
             audioManager["background"].Stop();
+            showingReplay = false;
         }
 
         public void makeIteration()
         {
             int ind = inputController.getKeyIndex();
+            if (showingReplay) ind = positions[time];
             for (int i = 0; i < p.Length; ++i)
             {
                 while (p[i] < map.v[i].Count && map.v[i][p[i]] < time) p[i]++;
@@ -60,10 +78,12 @@ namespace Avoid
             {
                 pause();
             }
+            if (!showingReplay) positions[time] = ind;
             time++;
+            
         }
 
-        public void update(int ms)
+        public void update(float ms)
         {
             if (playing == false) return;
             timems += ms;
@@ -79,6 +99,14 @@ namespace Avoid
             Pen pen = new Pen(Color.White);
             Brush brush2 = new SolidBrush(Color.Green);
             int ind = inputController.getKeyIndex();
+
+            if (showingReplay)
+            {
+                if (time < positions.Length)
+                    ind = positions[time];
+                else
+                    pause();
+            }
 
             float time2 = timems / msInTick;
 

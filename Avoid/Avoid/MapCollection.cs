@@ -67,7 +67,7 @@ namespace Avoid
             List<int> r = new List<int>();
             for (int i = 0; i < c.Count;++i)
             {
-                for (int j = 0; j < Math.Pow(difficulty, 4 - c[i].Item1) ;++j)
+                for (int j = 0; j < Math.Pow(difficulty, 3 - c[i].Item1) ;++j)
                     r.Add(i);
             }
 
