@@ -12,7 +12,7 @@ namespace Avoid
         {
             return true;
         }
-        Map generateRandomMap()
+        public Map generateRandomMap()
         {
             Random rnd = new Random();
             Map cur = new Map();
