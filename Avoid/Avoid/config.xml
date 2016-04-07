@@ -1,6 +1,9 @@
-<keys>
-  <key index="0">68</key>
-  <key index="1">70</key>
-  <key index="2">74</key>
-  <key index="3">75</key>
-</keys>
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<keys>
+	  <key index="0">68</key>
+	  <key index="1">70</key>
+	  <key index="2">74</key>
+	  <key index="3">75</key>
+	</keys>
+</config>
