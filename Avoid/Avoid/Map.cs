@@ -8,6 +8,12 @@ namespace Avoid
 {
     class Map
     {
-        List<Tuple<int, int>>[] road = new List<Tuple<int, int>>[4];
+        public List<int>[] v = new List<int>[4];
+        public int length;
+        public Map()
+        {
+            
+
+        }
     }
 }
