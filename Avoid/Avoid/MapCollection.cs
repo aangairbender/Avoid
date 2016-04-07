@@ -18,7 +18,6 @@ namespace Avoid
         }
         public Map generateRandomMap(int len)
         {
-            Random rnd = new Random();
             Map cur = new Map();
             cur.length = len;
             double chance = 0.1;
@@ -36,7 +35,7 @@ namespace Avoid
                 }
                 if (i - minx < 4)
                 {
-                    int q = rnd.Next(0, 3);
+                    int q = rnd1.Next(0, 3);
                     while (cur.v[q].Count() != 0 && cur.v[q].Last() > i - 6) cur.v[q].Remove(cur.v[q].Last());
                     //s
 
@@ -46,6 +45,42 @@ namespace Avoid
                 return cur;
 
         }
+
+        public Map generateRandomMap2(int len, int difficulty)
+        {
+            Map cur = new Map();
+            cur.length = len;
+
+            List<Tuple<int, int>> c = new List<Tuple<int, int>>();
+            for (int i = 0; i < 15;++i)
+            {
+                int x = i;
+                int cnt = 0;
+                while (x>0)
+                {
+                    cnt++;
+                    x &= (x - 1);
+                }
+                c.Add(new Tuple<int, int>(cnt, i));
+            }
+            c.Sort();
+            List<int> r = new List<int>();
+            for (int i = 0; i < c.Count;++i)
+            {
+                for (int j = 0; j < Math.Pow(difficulty, 4 - c[i].Item1) ;++j)
+                    r.Add(i);
+            }
+
+            for (int j = 40; j < len; ++j)
+            {
+                int p = r[rnd1.Next(r.Count - 1)];
+                int val = c[p].Item2;
+                for (int i = 0; i < 4; ++i)
+                    if ((val & (1 << i)) > 0) cur.v[i].Add(j);
+            }
+            return cur;
+        }
+
         public MapCollection()
         {
             Map test1 = new Map();

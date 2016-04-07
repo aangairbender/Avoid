@@ -17,6 +17,7 @@ namespace Avoid
         public Map map;
         public bool playing;
         public InputController inputController;
+        public AudioManager audioManager;
         public GameManager(Map map, InputController inputController, float msInTick)
         {
             this.map = map;
@@ -24,6 +25,7 @@ namespace Avoid
             this.msInTick = msInTick;
             timems = 0;
             playing = false;
+            audioManager = new AudioManager();
         }
 
         public void start()
@@ -33,6 +35,7 @@ namespace Avoid
             for (int i = 0; i < 4; ++i)
                 p[i] = 0;
             playing = true;
+            audioManager["background"].PlayLooping();
         }
 
         public void resume()
@@ -43,6 +46,7 @@ namespace Avoid
         public void pause()
         {
             playing = false;
+            audioManager["background"].Stop();
         }
 
         public void makeIteration()
