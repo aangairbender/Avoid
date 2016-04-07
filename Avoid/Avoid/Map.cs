@@ -12,7 +12,7 @@ namespace Avoid
         public int length;
         public Map()
         {
-            
+            for (int i = 0; i < 4; ++i) v[i] = new List<int>();
 
         }
     }

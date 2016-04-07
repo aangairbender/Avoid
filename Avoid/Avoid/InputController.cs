@@ -22,14 +22,14 @@ namespace Avoid
         private void readKeysFromFile()
         {
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("config.ini");
+            xmlDoc.Load("config.xml");
             foreach(XmlNode xmlNode in xmlDoc.DocumentElement.ChildNodes)
             {
-                if(xmlNode.Name == "Keys")
+                if(xmlNode.Name == "keys")
                 {
                     foreach(XmlNode keyNode in xmlNode.ChildNodes)
                     {
-                        keyCodes[Convert.ToInt32(keyNode["index"])] = keyNode.Value;
+                        keyCodes[Convert.ToInt32(keyNode.Attributes.GetNamedItem("index").Value)] = keyNode.FirstChild.InnerText;
                     }
 
                 }
@@ -39,7 +39,7 @@ namespace Avoid
         {
             for (int i = 0; i < 4; ++i)
             {
-                if (keyCodes[i] == e.KeyCode.ToString()) lastKeyIndex = i;
+                if ((Keys)Convert.ToInt32(keyCodes[i]) == e.KeyCode) lastKeyIndex = i;
             }
         }
         public void keyUp(KeyEventArgs e)

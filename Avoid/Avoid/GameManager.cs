@@ -10,7 +10,8 @@ namespace Avoid
     class GameManager
     {
         public const float barWidth = 10f;
-        public int time; // in ms from beginning
+        public float timems; // in ms from beginning
+        public int time; //in ticks
         public int msInTick;
         public int[] p = new int[4];
         public Map map;
@@ -21,12 +22,13 @@ namespace Avoid
             this.map = map;
             this.inputController = inputController;
             this.msInTick = msInTick;
-            time = 0;
+            timems = 0;
             playing = false;
         }
 
         public void start()
         {
+            timems = 0;
             time = 0;
             for (int i = 0; i < 4; ++i)
                 p[i] = 0;
@@ -45,23 +47,24 @@ namespace Avoid
 
         public void makeIteration()
         {
-            if (playing == false) return;
             int ind = inputController.getKeyIndex();
             for (int i = 0; i < p.Length; ++i)
             {
-                while (map.v[i][p[i]] < time) p[i]++;
+                while (p[i] < map.v[i].Count && map.v[i][p[i]] < time) p[i]++;
             }
-            if(map.v[ind][p[ind]] == time)
+            if(p[ind] < map.v[ind].Count && map.v[ind][p[ind]] == time)
             {
-                pause();
+                //pause();
             }
             time++;
         }
 
         public void update(int ms)
         {
-            for (int i = 0; i < ms / msInTick; ++i)
-                makeIteration();
+            if (playing == false) return;
+            timems += ms;
+            time = Convert.ToInt32(timems / msInTick);
+            makeIteration();     
         }
 
         public void draw(Graphics g, float width, float height)
@@ -69,22 +72,25 @@ namespace Avoid
             g.Clear(Color.Black);
             float cWidth = width / p.Length;
             Brush brush = new SolidBrush(Color.Red);
-            Pen pen = new Pen(Color.Black);
+            Pen pen = new Pen(Color.White);
             Brush brush2 = new SolidBrush(Color.Green);
             int ind = inputController.getKeyIndex();
+
+            float time2 = timems / msInTick;
+
             for (int i = 0; i < p.Length; ++i)
             {
                 float x = cWidth * i;
-                for (int j = p[i]; (map.v[i][j] - time) * barWidth + barWidth < height; ++j)
+                for (int j = p[i]; j < map.v[i].Count && (map.v[i][j] - time2) * barWidth + barWidth < height; ++j)
                 {
-                    g.FillRectangle(brush, x, height - (map.v[i][j] - time) * barWidth - barWidth, cWidth, barWidth);
+                    g.FillRectangle(brush, x, height - (map.v[i][j] - time2) * barWidth - barWidth, cWidth, barWidth);
                 }
                 if (i == ind)
                 {
                     g.FillRectangle(brush2, x, height - barWidth, cWidth, barWidth);
                 }
-                g.DrawRectangle(pen, x, height - barWidth, cWidth, barWidth);
             }
+            g.DrawLine(pen, 0, height - barWidth, width, height - barWidth);
         }
 
     }
