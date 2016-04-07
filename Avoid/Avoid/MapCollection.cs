@@ -17,7 +17,7 @@ namespace Avoid
             return true;
             return false;
         }
-        Map generateRandomMap(int len)
+        public Map generateRandomMap(int len)
         {
             Random rnd = new Random();
             Map cur = new Map();

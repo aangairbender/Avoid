@@ -20,7 +20,7 @@ namespace Avoid
         {
             InitializeComponent();
             inputController = new InputController();
-            gm = new GameManager(new MapCollection().generateRandomMap(), inputController, 100);
+            gm = new GameManager(new MapCollection().generateRandomMap(200), inputController, 100);
             
         }
 
