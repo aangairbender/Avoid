@@ -70,13 +70,25 @@ namespace Avoid
                 for (int j = 0; j < Math.Pow(difficulty, 3 - c[i].Item1) ;++j)
                     r.Add(i);
             }
-
+            List<int> u = new List<int>();
             for (int j = 40; j < len; ++j)
             {
-                int p = r[rnd1.Next(r.Count - 1)];
+                int p; 
+                while(true)
+                {
+                    p = r[rnd1.Next(r.Count - 1)];
+                    if (!u.Contains(c[p].Item2)) break;
+                }
                 int val = c[p].Item2;
                 for (int i = 0; i < 4; ++i)
+                {
                     if ((val & (1 << i)) > 0) cur.v[i].Add(j);
+                }
+                u.Clear();
+                for (int i = 0; i < 15; ++i)
+                {
+                    if ((i | val) == 15) u.Add(i);
+                }
             }
             return cur;
         }

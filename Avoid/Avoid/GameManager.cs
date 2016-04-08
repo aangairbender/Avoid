@@ -112,7 +112,7 @@ namespace Avoid
             if (showingReplay) ind = positions[time];
             for (int i = 0; i < p.Length; ++i)
             {
-                while (p[i] < map.v[i].Count && map.v[i][p[i]] < time) p[i]++;
+                while (p[i] < map.v[i].Count && map.v[i][p[i]]*msInTick < timems) p[i]++;
             }
             if(p[ind] < map.v[ind].Count && map.v[ind][p[ind]] == time)
             {

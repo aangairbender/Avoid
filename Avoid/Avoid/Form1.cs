@@ -21,7 +21,7 @@ namespace Avoid
         {
             InitializeComponent();
             inputController = new InputController();
-            gm = new GameManager(new MapCollection().generateRandomMap2(600, 15), inputController, 40f);
+            gm = new GameManager(new MapCollection().generateRandomMap2(600, 20), inputController, 30f);
             timer1.Enabled = true;
             pms = DateTime.Now;
             gm.start();
@@ -41,7 +41,7 @@ namespace Avoid
             inputController.keyDown(e);
             if (e.KeyCode == Keys.Space && !gm.playing)
             {
-                gm = new GameManager(new MapCollection().generateRandomMap2(600, 15), inputController, 50f);
+                gm = new GameManager(new MapCollection().generateRandomMap2(600, 20), inputController, 30f);
                 gm.start();
                 timer1.Enabled = true;
             } else
